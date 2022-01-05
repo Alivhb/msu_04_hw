@@ -1,5 +1,3 @@
-let top_highscore = window.localStorage.getItem(`user`);
-top_highscore = JSON.parse(top_highscore);
 const timer_elemnt = document.getElementById(`timer`);
 const score_elemnt = document.getElementById(`highscore`);
 let answered = false;
@@ -110,14 +108,13 @@ const questions_and_answers = [
     }
 ]
 
-score_elemnt.innerHTML =" "+ top_highscore.initials + ": " + top_highscore.score;
+score_elemnt.innerHTML = gethighscore().initials +": "+gethighscore().score;
 
 document.querySelector(`#start`).addEventListener(`click`, function(){
     let card = document.querySelector(`.card`);
     card.remove();
     build_card();
 });
-
 function end_status(){
     if(ques_number > 10){
         return true
@@ -280,6 +277,15 @@ function local_storage(initials, score){
         score: score+"/10"
     }
     window.localStorage.setItem(`user`, JSON.stringify(person));
+}
+function gethighscore(){
+    let highscore = window.localStorage.getItem(`user`);
+    if(highscore){
+        return JSON.parse(highscore);
+    }else{
+        return empty = {initials: "", score: 0};
+    }
+
 }
 
 function setTimer(){
